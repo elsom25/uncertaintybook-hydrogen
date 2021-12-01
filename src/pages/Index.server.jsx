@@ -8,7 +8,6 @@ import {
 import gql from 'graphql-tag';
 
 import Layout from '../components/Layout.server';
-import FeaturedCollection from '../components/FeaturedCollection.server';
 import ProductCard from '../components/ProductCard.server';
 import Welcome from '../components/Welcome.server';
 
@@ -80,8 +79,6 @@ export default function Index({country = {isoCode: 'US'}}) {
   const featuredProducts = featuredProductsCollection
     ? flattenConnection(featuredProductsCollection.products)
     : null;
-  const featuredCollection =
-    collections && collections.length > 1 ? collections[1] : collections[0];
 
   return (
     <Layout hero={<GradientBackground />}>
@@ -94,14 +91,6 @@ export default function Index({country = {isoCode: 'US'}}) {
                 <span className="text-black uppercase">
                   {featuredProductsCollection.title}
                 </span>
-                <span className="hidden md:inline-flex">
-                  <Link
-                    to={`/collections/${featuredProductsCollection.handle}`}
-                    className="text-blue-600 hover:underline"
-                  >
-                    Shop all
-                  </Link>
-                </span>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
                 {featuredProducts.map((product) => (
@@ -110,18 +99,9 @@ export default function Index({country = {isoCode: 'US'}}) {
                   </div>
                 ))}
               </div>
-              <div className="md:hidden text-center">
-                <Link
-                  to={`/collections/${featuredCollection.handle}`}
-                  className="text-blue-600"
-                >
-                  Shop all
-                </Link>
-              </div>
             </>
           ) : null}
         </div>
-        <FeaturedCollection collection={featuredCollection} />
       </div>
     </Layout>
   );
